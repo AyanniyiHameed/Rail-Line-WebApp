@@ -2,6 +2,11 @@ import { WalletIcon } from "lucide-react";
 import Image from "next/image";
 import Values from "./components/Values";
 import TravelHub from "./components/TravelHub";
+import PopularRoutes from "./components/PopularRoutes";
+import NewsLetter from "./components/NewsLetter";
+import Footer from "./components/Footer";
+import Faqs from "./components/Faqs";
+import Searchbox from "./components/Searchbox";
 
 export default function Home() {
   return (
@@ -17,7 +22,7 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-black/70" />
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
+        <div className="relative z-10 flex h-full flex-col items-center justify-center -mt-7 px-6 text-center text-white">
           <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
             Travel Smarter Across the UK
           </h1>
@@ -33,12 +38,18 @@ export default function Home() {
           >
             Find Your Train
           </a>
+          
         </div>
         
       </section>
+      <Searchbox/>  
 
       <Values />
       <TravelHub />
+      <PopularRoutes/>
+      <Faqs/>
+      <NewsLetter/>
+      <Footer/>
       
     
     

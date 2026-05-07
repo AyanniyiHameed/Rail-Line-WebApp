@@ -4,10 +4,10 @@ type Props = {}
 
 const Values = (props: Props) => {
   return (
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-10 bg-gray-100">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-10 bg-gray-200">
         {/* why choose railline section */}
-        <div className="mb-6 py-8 text-gray-950 text-center">
-            <h2 className="text-3xl font-bold mb-4">Why choose RailLine?</h2>
+        <div className="mb-6 py-8 text-gray-900 text-center">
+            <h2 className="text-4xl font-semibold text-gray-900 mb-4 tracking-tight">Why choose RailLine?</h2>
             <p className="text-[16px] text-gray-700 max-w-2xl mx-auto">Explore thousands of destinations and uncover hidden gems with fast, 
             frequent connections designed to keep you moving.</p>
         </div>
@@ -34,7 +34,7 @@ const Values = (props: Props) => {
             <div className="group rounded-2xl border border-black/5 bg-gray-200 p-8 backdrop-blur-lg transition hover:bg-white/10">          
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-600/20">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0 0 0)">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.25 2.75C3.25 2.33579 3.58579 2 4 2H6.5C8.87635 2 10.9429 3.32622 12 5.27888C13.0571 3.32622 15.1237 2 17.5 2H20C20.4142 2 20.75 2.33579 20.75 2.75V5.25C20.75 8.70178 17.9518 11.5 14.5 11.5H12.75H11.25H9.5C6.04822 11.5 3.25 8.70178 3.25 5.25V2.75Z" fill="#50cd23"/>
+                <path clipRule="evenodd" clip-rule="evenodd" d="M3.25 2.75C3.25 2.33579 3.58579 2 4 2H6.5C8.87635 2 10.9429 3.32622 12 5.27888C13.0571 3.32622 15.1237 2 17.5 2H20C20.4142 2 20.75 2.33579 20.75 2.75V5.25C20.75 8.70178 17.9518 11.5 14.5 11.5H12.75H11.25H9.5C6.04822 11.5 3.25 8.70178 3.25 5.25V2.75Z" fill="#50cd23"/>
                 <path opacity="0.4" d="M11.25 11.5L11.25 21.25C11.25 21.6642 11.5858 22 12 22C12.4142 22 12.75 21.6642 12.75 21.25L12.75 11.5H11.25Z" fill="#50cd23"/>
                 </svg>
 
