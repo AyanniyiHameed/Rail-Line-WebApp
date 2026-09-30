@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { stations } from "@/lib/stations";
+import { stationNames } from "@/lib/stations";
+
+const stations = stationNames();
 
 
 const Searchbox = () => {
