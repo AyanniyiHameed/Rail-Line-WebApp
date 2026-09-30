@@ -7,6 +7,7 @@ import NewsLetter from "./components/NewsLetter";
 import Footer from "./components/Footer";
 import Faqs from "./components/Faqs";
 import Searchbox from "./components/Searchbox";
+import FindTrainModal from "./components/FindTrainModal";
 
 export default function Home() {
   return (
@@ -31,13 +32,7 @@ export default function Home() {
             Real-time journeys. Simple booking. No chaos.
           </p>
 
-          {/* CTA Button (later this scrolls or routes to /search) */}
-          <a
-            href="/search"
-            className="mt-8 rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium transition hover:bg-gray-700"
-          >
-            Find Your Train
-          </a>
+          <FindTrainModal />
           
         </div>
         

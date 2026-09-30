@@ -1,16 +1,26 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 
 type Props = {}
 
 const Navbar = (props: Props) => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   return (
-    <nav className="w-full absolute top-0 left-0 z-50">
+    <nav
+      className={`w-full top-0 left-0 z-50 ${
+        isHome ? "absolute" : "sticky bg-zinc-900"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-15 ">
         <Link href="/" className="text-2xl font-semibold tracking-tight">
           <span className='text-zinc-200 font-bold'>Rail</span><span className="text-red-600">Line</span>
-        </Link> 
+        </Link>
 
         {/* <form
           // onSubmit={handleSearch}

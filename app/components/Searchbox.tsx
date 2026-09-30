@@ -2,16 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-const stations = [
-  "London Euston",
-  "London Bridge",
-  "London Victoria",
-  "Manchester Piccadilly",
-  "Birmingham New Street",
-  "Leeds",
-  "Brighton",
-];
+import { stations } from "@/lib/stations";
 
 
 const Searchbox = () => {
@@ -48,10 +39,10 @@ const Searchbox = () => {
   const handleSearch = () => {
     if (!from || !to || !date) return;
 
-    let url = `/search?from=${from}&to=${to}&date=${date}&passengers=${passengers}`;
+    let url = `/search?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&passengers=${passengers}`;
 
     if (isReturn && returnDate) {
-      url += `&returnDate=${returnDate}`;
+      url += `&returnDate=${encodeURIComponent(returnDate)}`;
     }
 
     router.push(url);
@@ -76,28 +67,49 @@ const Searchbox = () => {
 
 
 return (
-  <div className="relative mx-auto z-50 -mt-38 max-w-6xl rounded-2xl bg-white p-6 shadow-md">
+  <div id="search" className="relative mx-auto z-50 -mt-38 max-w-6xl rounded-2xl bg-white p-6 shadow-md">
 
     {/* TOP ROW */}
     <div className="grid gap-4 md:grid-cols-6 items-center">
 
       {/* FROM + SWAP + TO */}
-      <div className="flex items-center border rounded-lg overflow-hidden md:col-span-3">
+      <div className="relative md:col-span-3">
+        <div className="flex items-center border rounded-lg overflow-hidden">
 
-        <input
-          type="text"
-          placeholder="Departure"
-          value={from}
-          onChange={(e) => {setFrom(e.target.value)
-          handleSearchStations(e.target.value, "from");
-          }}
-          onFocus={() => setActiveInput("from")}
-          className="w-full p-3 text-sm outline-none"
-        />
+          <input
+            type="text"
+            placeholder="Departure"
+            value={from}
+            onChange={(e) => {setFrom(e.target.value)
+             handleSearchStations(e.target.value, "from") }}
+            onFocus={() => setActiveInput("from")}
+            className="w-full p-3 text-sm outline-none"
+          />
 
-        {/* Dropdown */}
+          {/* Swap */}
+          <button
+            onClick={handleSwap}
+            className="px-3 text-lg text-gray-500 hover:text-black hover:bg-gray-100 transition"
+          >
+            ⇄
+          </button>
+
+          {/* TO */}
+          <input
+            type="text"
+            placeholder="Arrival"
+            value={to}
+            onChange={(e) => {
+            setTo(e.target.value);
+            handleSearchStations(e.target.value, "to");
+            }}
+            className="w-full p-3 text-sm outline-none"
+          />
+        </div>
+
+        {/* Dropdown for FROM */}
         {activeInput === "from" && filteredFrom.length > 0 && (
-          <div className="absolute left-0 right-0 top-full bg-white border rounded-lg shadow-lg z-50 mt-1 max-h-48 overflow-y-auto">
+          <div className="absolute left-0 top-full w-1/2 bg-white border rounded-lg shadow-lg z-50 mt-1 max-h-48 overflow-y-auto">
             {filteredFrom.map((station, index) => (
               <div
                 key={index}
@@ -113,46 +125,25 @@ return (
             ))}
           </div>
         )}
-      
 
-        {/* Swap */}
-        <button
-          onClick={handleSwap}
-          className="px-3 text-lg text-gray-500 hover:text-black hover:bg-gray-100 transition"
-        >
-          ⇄
-        </button>
-
-        {/* TO */}
-        <input
-          type="text"
-          placeholder="Arrival"
-          value={to}
-          onChange={(e) => {
-          setTo(e.target.value);
-          handleSearchStations(e.target.value, "to");
-          }}
-          className="w-full p-3 text-sm outline-none"
-        />
-        {/* dropdown for TO */}
+        {/* Dropdown for TO */}
         {activeInput === "to" && filteredTo.length > 0 && (
-        <div className="absolute left-0 right-0 top-full bg-white border rounded-lg shadow-lg z-50 mt-1 max-h-48 overflow-y-auto">
-          {filteredTo.map((station, index) => (
-            <div
-              key={index}
-              onClick={() => {
-                setTo(station);
-                setFilteredTo([]);
-                setActiveInput(null);
-              }}
-              className="p-2 text-sm hover:bg-gray-100 cursor-pointer"
-            >
-              {station}
-            </div>
-        ))}
-        </div>
-      )}
-
+          <div className="absolute right-0 top-full w-1/2 bg-white border rounded-lg shadow-lg z-50 mt-1 max-h-48 overflow-y-auto">
+            {filteredTo.map((station, index) => (
+              <div
+                key={index}
+                onClick={() => {
+                  setTo(station);
+                  setFilteredTo([]);
+                  setActiveInput(null);
+                }}
+                className="p-2 text-sm hover:bg-gray-100 cursor-pointer"
+              >
+                {station}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* DATE */}
