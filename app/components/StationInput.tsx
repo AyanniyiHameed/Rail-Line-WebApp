@@ -6,13 +6,21 @@ import { stationNames } from "@/lib/stations";
 const stations = stationNames();
 
 type Props = {
-  label: string;
+  label?: string;
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  variant?: "light" | "dark";
 };
 
-const StationInput = ({ label, placeholder, value, onChange }: Props) => {
+const inputStyles = {
+  light:
+    "w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base outline-none transition focus:border-red-500 focus:bg-white focus:ring-4 focus:ring-red-500/10",
+  dark:
+    "w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-zinc-300 outline-none backdrop-blur-md transition focus:border-white focus:ring-0",
+};
+
+const StationInput = ({ label, placeholder, value, onChange, variant = "light" }: Props) => {
   const [open, setOpen] = useState(false);
 
   const matches = stations.filter((station) =>
@@ -23,9 +31,11 @@ const StationInput = ({ label, placeholder, value, onChange }: Props) => {
 
   return (
     <div className="relative">
-      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-zinc-500">
-        {label}
-      </label>
+      {label && (
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-zinc-500">
+          {label}
+        </label>
+      )}
       <input
         type="text"
         placeholder={placeholder}
@@ -36,7 +46,7 @@ const StationInput = ({ label, placeholder, value, onChange }: Props) => {
         }}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base outline-none transition focus:border-red-500 focus:bg-white focus:ring-4 focus:ring-red-500/10"
+        className={inputStyles[variant]}
       />
 
       {showList && (

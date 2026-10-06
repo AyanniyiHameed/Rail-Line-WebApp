@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Input } from '@/components/ui/input'
+import NavSearch from './NavSearch'
 
 type Props = {}
 
@@ -22,34 +22,9 @@ const Navbar = (props: Props) => {
           <span className='text-zinc-200 font-bold'>Rail</span><span className="text-red-600">Line</span>
         </Link>
 
-        {/* <form
-          // onSubmit={handleSearch}
-          className="hidden md:flex w-full max-w-md items-center gap-2 rounded-xl border bg-gray-50 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500"
-        >
-          <Input className="h-4 w-4 text-gray-500" />
-          <input
-            type="text"
-            placeholder="Search stations or routes..."
-            className="w-full bg-transparent text-sm outline-none"
-            // value={query}
-            // onChange={(e) => setQuery(e.target.value)}
-          />
-        </form> */}
-
-        <Input 
-          className='px-3 py-2 outline-none
-            w-96
-            bg-white/10
-            text-white
-            placeholder:text-zinc-300
-            border border-white/20
-            focus:border-white
-            focus:ring-0
-            backdrop-blur-md'
-          type='text'
-          placeholder="Search stations or routes..."
-        
-        />
+        <div className="hidden w-96 md:block">
+          <NavSearch />
+        </div>
 
          {/* Right: Links */}
         <div className="flex items-center gap-6 text-sm font-medium">
