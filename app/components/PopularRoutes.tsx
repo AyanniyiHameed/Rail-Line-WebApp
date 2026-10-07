@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
+import Link from 'next/link';
 
 type Props = {}
 
@@ -8,6 +9,8 @@ const PopularRoutes = (props: Props) => {
   {
     from: "London",
     to: "Manchester",
+    fromStation: "London Euston",
+    toStation: "Manchester Piccadilly",
     duration: "2h 08m",
     price: "£32",
     image: "/images/manchesterPic.jpg"
@@ -15,6 +18,8 @@ const PopularRoutes = (props: Props) => {
   {
     from: "London",
     to: "Brighton",
+    fromStation: "London Victoria",
+    toStation: "Brighton",
     duration: "1h 03m",
     price: "£12",
     image: "/images/BrightonPic.jpg"
@@ -23,6 +28,8 @@ const PopularRoutes = (props: Props) => {
   {
     from: "London",
     to: "Birmingham",
+    fromStation: "London Euston",
+    toStation: "Birmingham New Street",
     duration: "1h 21m",
     price: "£18",
     image: "/images/birminghamPic.jpg"
@@ -30,6 +37,8 @@ const PopularRoutes = (props: Props) => {
   {
     from: "London",
     to: "Leeds",
+    fromStation: "London Euston",
+    toStation: "Leeds",
     duration: "2h 15m",
     price: "£28",
     image: "/images/leedsPic.jpg"
@@ -67,6 +76,13 @@ const PopularRoutes = (props: Props) => {
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition" />
 
+            {/* Link stretched over the whole card */}
+            <Link
+                href={`/search?${new URLSearchParams({ from: route.fromStation, to: route.toStation })}`}
+                aria-label={`View ${route.from} to ${route.to} journeys`}
+                className="absolute inset-0 z-20"
+            />
+
             {/* Content */}
             <div className="relative z-10 flex h-full flex-col justify-between p-6">
                 
@@ -90,41 +106,7 @@ const PopularRoutes = (props: Props) => {
                 </div>
 
             </div>
-        </div>
-            // <div
-            //     key={`${route.from}-${route.to}`}
-            //     className="group relative cursor-pointer rounded-2xl h-56 border border-white/10 bg-white/5 p-6 transition hover:bg-white/10 hover:-translate-y-1">
-            //     <Image
-            //         src={route.image}
-            //         alt= {`${route.from} - ${route.to}`}
-            //         fill
-            //         className="object-cover"
-            //     />
-            //     {/* Overlay */}
-            //     <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition"/>
-
-            //     {/* Route */}
-            //     <div className="relative z-10 flex h-full flex-col p-6 justify-between">
-            //         <h3 className="text-lg font-semibold">
-            //             {route.from} → {route.to}
-            //         </h3>
-
-            //         <span className="text-sm text-green-400 font-medium">
-            //             from {route.price}
-            //         </span>
-
-            //         <p className="relative mb-8 text-sm text-white font-bold">
-            //         {route.duration}
-            //         </p>
-
-            //         <div className=" text-sm  text-red-400 group-hover:text-red-300">
-            //         View journey →
-            //         </div>
-            //     </div>
-
-
-            // </div>
-            
+        </div>     
         ))}
       </div>
 

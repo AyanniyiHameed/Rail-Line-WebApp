@@ -15,7 +15,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = await searchParams;
   const from = params.from ?? "";
   const to = params.to ?? "";
-  const date = params.date ?? "";
+  const today = new Date().toLocaleDateString("en-CA", {
+    timeZone: "Europe/London",
+  });
+  const date = params.date ?? today;
   const passengers = Number(params.passengers ?? 1);
 
   if (!from || !to || !date) {

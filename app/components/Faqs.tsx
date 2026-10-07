@@ -5,7 +5,7 @@ import Image from 'next/image'
 type Props = {}
 
 const Faqs = (props: Props) => {
-   const [openIndex, setOpenIndex] = React.useState(null);
+   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
  
 const faqs = [
   {

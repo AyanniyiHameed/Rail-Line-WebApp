@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 
 type Props = {}
@@ -9,6 +10,7 @@ const travelItems = [
     description:
       "Keep track of what’s happening across the network in real time. Check live departures and arrivals, spot delays early, and find alternative routes if your journey is disrupted.",
     buttonText: "Check service updates →",
+    href: "/live-times",
   },
   {
     title: "Engineering Works",
@@ -40,7 +42,15 @@ const TravelHub = (props: Props) => {
                         <hr />
                         <p className="mt-3 text-white text-sm leading-relaxed text-center">{item.description}</p> 
                         <div className='mt-auto flex justify-center'>
-                            <Button className='bg-white mt-4 font-bold w-2xs h-12 text-red-600' variant="outline">{item.buttonText} →</Button>
+                            {item.href ? (
+                                <Button asChild className='bg-white mt-4 font-bold w-2xs h-12 text-red-600' variant="outline">
+                                    <Link href={item.href}>{item.buttonText}</Link>
+                                </Button>
+                            ) : (
+                                <Button disabled className='bg-white mt-4 font-bold w-2xs h-12 text-red-600' variant="outline">
+                                    Coming soon
+                                </Button>
+                            )}
                         </div>
 
                     </div>
