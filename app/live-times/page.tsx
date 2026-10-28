@@ -7,5 +7,5 @@ type LiveTimesPageProps = {
 export default async function LiveTimesPage({ searchParams }: LiveTimesPageProps) {
   const params = await searchParams;
 
-  return <LiveBoard initialStationCode={params.station} />;
+  return <LiveBoard key={params.station} initialStationCode={params.station} />;
 }
