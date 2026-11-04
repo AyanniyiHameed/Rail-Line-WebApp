@@ -59,7 +59,14 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       <div className="flex flex-col gap-4">
         {journeys.map((journey) => (
-          <JourneyCard key={journey.id} journey={journey} />
+          <JourneyCard
+            key={journey.id}
+            journey={journey}
+            from={from}
+            to={to}
+            date={date}
+            passengers={passengers}
+          />
         ))}
       </div>
     </main>
