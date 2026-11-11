@@ -3,13 +3,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { stationNames } from "@/lib/stations";
+import { todayUK } from "@/lib/dates";
 
 const stations = stationNames();
 
 
 const Searchbox = () => {
   const router = useRouter();
-  
+  const today = todayUK();
+
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
@@ -39,7 +41,8 @@ const Searchbox = () => {
   };
 
   const handleSearch = () => {
-    if (!from || !to || !date) return;
+    if (!from || !to || !date || date < today) return;
+    if (isReturn && !returnDate) return;
 
     let url = `/search?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&passengers=${passengers}`;
 
@@ -152,6 +155,7 @@ return (
       <input
         type="date"
         value={date}
+        min={today}
         onChange={(e) => setDate(e.target.value)}
         className="rounded-lg border p-3 text-sm md:col-span-2"
       />
@@ -159,7 +163,7 @@ return (
       {/* SEARCH */}
       <button
         onClick={handleSearch}
-        className="rounded-lg bg-red-600 text-white font-semibold cursor-pointer hover:bg-red-700 transition h-full"
+        className="rounded-lg bg-red-600 text-white font-semibold cursor-pointer hover:bg-red-700 transition h-full py-3"
       >
         Search
       </button>
@@ -182,6 +186,7 @@ return (
         <input
           type="date"
           value={returnDate}
+          min={date || today}
           onChange={(e) => setReturnDate(e.target.value)}
           className="rounded-lg border p-2 text-sm"
         />

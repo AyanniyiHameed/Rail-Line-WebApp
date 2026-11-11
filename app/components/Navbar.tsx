@@ -7,9 +7,28 @@ import { Menu, X } from 'lucide-react'
 import { Show, SignInButton, UserButton } from '@clerk/nextjs'
 import NavSearch from './NavSearch'
 
-const linkClass = "text-zinc-300 transition hover:text-zinc-50 font-bold"
 const signInClass =
   "cursor-pointer rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-700"
+
+// A nav link that gets a red underline when you're on that page
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+  const pathname = usePathname();
+  const active = pathname === href || pathname.startsWith(`${href}/`);
+
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "page" : undefined}
+      className={`w-fit border-b-2 pb-1 font-bold transition ${
+        active
+          ? "border-red-600 text-zinc-50"
+          : "border-transparent text-zinc-300 hover:text-zinc-50"
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -39,14 +58,10 @@ const Navbar = () => {
 
         <div className="hidden items-center gap-6 text-sm font-medium lg:flex">
           <Show when="signed-in">
-            <Link href="/my-tickets" className={linkClass}>
-              My Tickets
-            </Link>
+            <NavLink href="/my-tickets">My Tickets</NavLink>
           </Show>
 
-          <Link href="/live-times" className={linkClass}>
-            Live Train Times
-          </Link>
+          <NavLink href="/live-times">Live Train Times</NavLink>
 
           <Show when="signed-out">
             <SignInButton mode="modal">
@@ -89,14 +104,10 @@ const Navbar = () => {
           <NavSearch />
 
           <Show when="signed-in">
-            <Link href="/my-tickets" className={linkClass}>
-              My Tickets
-            </Link>
+            <NavLink href="/my-tickets">My Tickets</NavLink>
           </Show>
 
-          <Link href="/live-times" className={linkClass}>
-            Live Train Times
-          </Link>
+          <NavLink href="/live-times">Live Train Times</NavLink>
 
           <Show when="signed-out">
             <SignInButton mode="modal">

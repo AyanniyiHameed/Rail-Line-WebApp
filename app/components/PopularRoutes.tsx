@@ -46,7 +46,7 @@ const PopularRoutes = (props: Props) => {
   },
 ];
   return (
-    <section className="relative z-10 mx-auto max-w-7xl px-10 py-20 text-white">
+    <section className="relative z-10 mx-auto max-w-7xl px-4 py-14 text-white sm:px-10 sm:py-20">
       
       {/* Heading */}
       <div className="mb-12">
@@ -74,7 +74,7 @@ const PopularRoutes = (props: Props) => {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition" />
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/55 transition" />
 
             {/* Link stretched over the whole card */}
             <Link

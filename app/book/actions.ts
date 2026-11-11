@@ -13,17 +13,20 @@ export async function confirmBooking(formData: FormData) {
   const booking = resolveBooking(Object.fromEntries(formData) as BookingParams);
   if (!booking) throw new Error("Invalid booking");
 
-  await db.insert(tickets).values({
-    userId,
-    fromStation: booking.from,
-    toStation: booking.to,
-    travelDate: booking.date,
-    departTime: booking.journey.departTime,
-    arriveTime: booking.journey.arriveTime,
-    operator: booking.journey.operator,
-    passengers: booking.passengers,
-    price: booking.total,
-  });
+  // One ticket per leg. A single insert statement, so both save or neither does.
+  await db.insert(tickets).values(
+    booking.legs.map((leg) => ({
+      userId,
+      fromStation: leg.from,
+      toStation: leg.to,
+      travelDate: leg.date,
+      departTime: leg.journey.departTime,
+      arriveTime: leg.journey.arriveTime,
+      operator: leg.journey.operator,
+      passengers: booking.passengers,
+      price: leg.journey.price * booking.passengers,
+    })),
+  );
 
   redirect("/my-tickets");
 }

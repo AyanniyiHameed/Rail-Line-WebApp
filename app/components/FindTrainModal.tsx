@@ -4,9 +4,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Dialog } from "radix-ui";
 import { ArrowUpDown, Minus, Plus, X } from "lucide-react";
+import { todayUK } from "@/lib/dates";
 import StationInput from "./StationInput";
 
-const FindTrainModal = () => {
+type Props = {
+  label?: string;
+  triggerClassName?: string;
+};
+
+const FindTrainModal = ({
+  label = "Book a ticket",
+  triggerClassName = "mt-8 cursor-pointer rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-700",
+}: Props) => {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -17,7 +26,8 @@ const FindTrainModal = () => {
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState(1);
 
-  const canSearch = from && to && date;
+  const today = todayUK();
+  const canSearch = from && to && date >= today && (!isReturn || returnDate);
 
   const handleSwap = () => {
     setFrom(to);
@@ -38,14 +48,12 @@ const FindTrainModal = () => {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="mt-8 cursor-pointer rounded-lg bg-gray-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-700">
-        Find Your Train
-      </Dialog.Trigger>
+      <Dialog.Trigger className={triggerClassName}>{label}</Dialog.Trigger>
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-[60] bg-black/75 backdrop-blur-sm duration-200 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
 
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-[70] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6 shadow-2xl duration-200 outline-none sm:p-10 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-90 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-[70] max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6 shadow-2xl duration-200 outline-none sm:p-10 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-90 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
           <Dialog.Close
             aria-label="Close"
             className="absolute right-5 top-5 cursor-pointer rounded-full p-2 text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700"
@@ -91,6 +99,7 @@ const FindTrainModal = () => {
               <input
                 type="date"
                 value={date}
+                min={today}
                 onChange={(e) => setDate(e.target.value)}
                 className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base outline-none transition focus:border-red-500 focus:bg-white focus:ring-4 focus:ring-red-500/10"
               />
@@ -139,6 +148,7 @@ const FindTrainModal = () => {
               <input
                 type="date"
                 value={returnDate}
+                min={date || today}
                 onChange={(e) => setReturnDate(e.target.value)}
                 className="mt-3 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base outline-none transition focus:border-red-500 focus:bg-white focus:ring-4 focus:ring-red-500/10 sm:w-1/2"
               />

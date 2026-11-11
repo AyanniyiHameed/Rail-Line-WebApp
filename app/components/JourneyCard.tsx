@@ -4,21 +4,10 @@ import { Button } from "@/components/ui/button";
 
 type Props = {
   journey: Journey;
-  from: string;
-  to: string;
-  date: string;
-  passengers: number;
+  href: string; // where Select goes: decided by the page, not the card
 };
 
-const JourneyCard = ({ journey, from, to, date, passengers }: Props) => {
-  const bookingParams = new URLSearchParams({
-    from,
-    to,
-    date,
-    journey: journey.id,
-    passengers: String(passengers),
-  });
-
+const JourneyCard = ({ journey, href }: Props) => {
   return (
     <div className="flex items-center justify-between rounded-xl border p-5 transition hover:border-red-300 hover:shadow-sm">
       <div className="flex items-center gap-6">
@@ -48,7 +37,7 @@ const JourneyCard = ({ journey, from, to, date, passengers }: Props) => {
       <div className="text-right">
         <p className="text-xl font-bold text-red-600">£{journey.price}</p>
         <Button asChild size="sm" className="mt-2">
-          <Link href={`/book?${bookingParams}`}>Select</Link>
+          <Link href={href}>Select</Link>
         </Button>
       </div>
     </div>

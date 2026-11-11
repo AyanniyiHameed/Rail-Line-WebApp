@@ -1,8 +1,9 @@
-import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { tickets } from "@/db/schema";
+import { todayUK } from "@/lib/dates";
+import FindTrainModal from "../components/FindTrainModal";
 import TicketCard from "../components/TicketCard";
 
 export default async function MyTicketsPage() {
@@ -16,9 +17,7 @@ export default async function MyTicketsPage() {
     .where(eq(tickets.userId, userId))
     .orderBy(desc(tickets.createdAt));
 
-  const today = new Date().toLocaleDateString("en-CA", {
-    timeZone: "Europe/London",
-  });
+  const today = todayUK();
 
   // "YYYY-MM-DD" strings sort correctly as plain text, so >= works for dates
   const upcoming = myTickets
@@ -42,12 +41,7 @@ export default async function MyTicketsPage() {
           <p className="mt-1 text-sm text-zinc-500">
             Tickets you book will show up here.
           </p>
-          <Link
-            href="/"
-            className="mt-5 inline-block rounded-lg bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700"
-          >
-            Find a train
-          </Link>
+          <FindTrainModal triggerClassName="mt-5 inline-block cursor-pointer rounded-lg bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700" />
         </div>
       ) : (
         <ul className="mt-3 flex flex-col gap-4">

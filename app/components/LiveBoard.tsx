@@ -61,7 +61,7 @@ const LiveBoard = ({ initialStationCode }: Props) => {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-6 pb-20 pt-28">
+    <main className="mx-auto max-w-3xl px-6 pb-20 pt-10 sm:pt-16">
       <h1 className="text-2xl font-semibold tracking-tight">Live Train Times</h1>
       <p className="mt-1 text-sm text-zinc-600">
         Departures and arrivals for any UK station.
@@ -119,23 +119,29 @@ const LiveBoard = ({ initialStationCode }: Props) => {
           </div>
 
           <div className="overflow-hidden rounded-xl border border-zinc-200">
-            <div className="grid grid-cols-[70px_1fr_60px_1fr_110px] gap-2 bg-zinc-900 px-4 py-2.5 text-xs font-semibold uppercase text-zinc-300">
+            <div className="grid grid-cols-[56px_1fr_auto] gap-2 bg-zinc-900 px-4 py-2.5 text-xs font-semibold uppercase text-zinc-300 sm:grid-cols-[70px_1fr_60px_1fr_110px]">
               <span>Time</span>
               <span>{mode === "departures" ? "Destination" : "From"}</span>
-              <span>Plat.</span>
-              <span>Operator</span>
+              <span className="hidden sm:block">Plat.</span>
+              <span className="hidden sm:block">Operator</span>
               <span className="text-right">Status</span>
             </div>
 
             {board?.map((row) => (
               <div
                 key={row.id}
-                className="grid grid-cols-[70px_1fr_60px_1fr_110px] gap-2 border-t border-zinc-100 px-4 py-3 text-sm"
+                className="grid grid-cols-[56px_1fr_auto] gap-2 border-t border-zinc-100 px-4 py-3 text-sm sm:grid-cols-[70px_1fr_60px_1fr_110px]"
               >
                 <span className="font-semibold">{row.scheduled}</span>
-                <span>{row.destination}</span>
-                <span className="text-zinc-500">{row.platform}</span>
-                <span className="text-zinc-500">{row.operator}</span>
+                <span>
+                  {row.destination}
+                  {/* phone only: platform + operator go under the destination */}
+                  <span className="mt-0.5 block text-xs text-zinc-500 sm:hidden">
+                    Platform {row.platform} · {row.operator}
+                  </span>
+                </span>
+                <span className="hidden text-zinc-500 sm:block">{row.platform}</span>
+                <span className="hidden text-zinc-500 sm:block">{row.operator}</span>
                 <span className={`text-right font-medium ${statusColor[row.status]}`}>
                   {row.status === "Delayed" && row.expected
                     ? `Exp ${row.expected}`
