@@ -4,7 +4,6 @@ import Values from "./components/Values";
 import TravelHub from "./components/TravelHub";
 import PopularRoutes from "./components/PopularRoutes";
 import NewsLetter from "./components/NewsLetter";
-import Footer from "./components/Footer";
 import Faqs from "./components/Faqs";
 import Searchbox from "./components/Searchbox";
 import FindTrainModal from "./components/FindTrainModal";
@@ -44,7 +43,6 @@ export default function Home() {
       <PopularRoutes/>
       <Faqs/>
       <NewsLetter/>
-      <Footer/>
       
     
     

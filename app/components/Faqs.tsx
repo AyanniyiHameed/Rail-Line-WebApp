@@ -32,7 +32,7 @@ const faqs = [
 
     return (
         <>
-          <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-start justify-center mb-10 gap-10 px-4 md:px-0">
+          <div id="faqs" className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-start justify-center mb-10 gap-10 px-4 md:px-0 scroll-mt-8">
               <Image
                   className="max-w-sm object-cover rounded-xl"
                   src="/images/faqpic.jpg"
