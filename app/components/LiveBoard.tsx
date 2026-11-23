@@ -11,6 +11,7 @@ type Props = {
 };
 
 const REFRESH_MS = 30_000;
+const STORAGE_KEY = "railline:live-board";
 
 const statusColor: Record<Departure["status"], string> = {
   "On time": "text-green-600",
@@ -29,8 +30,43 @@ const LiveBoard = ({ initialStationCode }: Props) => {
   const [mode, setMode] = useState<BoardMode>("departures");
   const [board, setBoard] = useState<Departure[] | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [ready, setReady] = useState(false);
 
   const station = findStationByName(stationName);
+
+  // Runs once when the page opens: bring back what the user last looked at.
+  // This has to be an effect, not the useState starting value, because the
+  // server can't see localStorage and the two renders would disagree.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null");
+
+      // A station in the URL wins over the remembered one
+      if (!initialStation && saved?.stationCode) {
+        const remembered = findStationByCode(saved.stationCode);
+        if (remembered) setStationName(remembered.name);
+      }
+      if (saved?.mode === "departures" || saved?.mode === "arrivals") {
+        setMode(saved.mode);
+      }
+    } catch {
+      // storage blocked or corrupted: just start fresh
+    }
+    setReady(true);
+  }, []);
+
+  // Remember the current choice for next time
+  useEffect(() => {
+    if (!station) return;
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ stationCode: station.code, mode }),
+      );
+    } catch {
+      // storage blocked: nothing to do
+    }
+  }, [station?.code, mode]);
 
   // Re-runs whenever the chosen station or mode changes, and again every
   // REFRESH_MS while this effect is still "current" - that's what makes
@@ -101,7 +137,7 @@ const LiveBoard = ({ initialStationCode }: Props) => {
         </div>
       </div>
 
-      {!station && (
+      {ready && !station && (
         <p className="mt-16 text-center text-sm text-zinc-500">
           Pick a station above to see its board.
         </p>
