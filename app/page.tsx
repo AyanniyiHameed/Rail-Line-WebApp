@@ -3,7 +3,7 @@ import Image from "next/image";
 import Values from "./components/Values";
 import TravelHub from "./components/TravelHub";
 import PopularRoutes from "./components/PopularRoutes";
-import NewsLetter from "./components/NewsLetter";
+import CallToAction from "./components/CallToAction";
 import Faqs from "./components/Faqs";
 import Searchbox from "./components/Searchbox";
 import FindTrainModal from "./components/FindTrainModal";
@@ -42,7 +42,7 @@ export default function Home() {
       <TravelHub />
       <PopularRoutes/>
       <Faqs/>
-      <NewsLetter/>
+      <CallToAction/>
       
     
     
